@@ -83,7 +83,6 @@
 
     <!-- Main Script -->
     <script type="module">
-
       // This function should fetch all of the data from the given endpoint.
       // From the 4 CRUD actions, this is the READ action, and uses the GET http method.
       // The main difference from fetchOne() will be the URL you request from; check
@@ -197,6 +196,11 @@
       // request; check the writeup to view the URL pattern for get one and delete. THERE IS NO 
       // delete all, only delete one.
       function deleteRecord() {
+        document.getElementById("recordForm").style.display = "block";
+        if (document.getElementById("recordIDcontainer").style.display == "block") {
+          document.getElementById("recordIDcontainer").style.display = "none";
+        }
+
         let textPrompt = "Enter record id";
         let singleID = window.prompt(textPrompt);
 
