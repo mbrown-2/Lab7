@@ -83,18 +83,26 @@
 
     <!-- Main Script -->
     <script type="module">
+
       // This function should fetch all of the data from the given endpoint.
       // From the 4 CRUD actions, this is the READ action, and uses the GET http method.
       // The main difference from fetchOne() will be the URL you request from; check
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchAll() {
-        // TODO
+
+        // Hiding records.
+        if (document.getElementById("recordForm").style.display == "block") {
+          document.getElementById("recordForm").style.display = "none";
+        }
+
         const Url = document.getElementById("endpoint").value;
 
         fetch(Url)
         .then(data=>{return data.json()})
         .then(res=>{document.getElementById("output").value = JSON.stringify(res)})
-        
+        .catch(error=>{throw(error);
+          console.log("in here"); })
+          // document.getElementById("output").value = "Network Error: 404"})
       }
 
       // This function should fetch one entry from the given endpoint.
@@ -102,7 +110,12 @@
       // The main difference from fetchAll() will be the URL you request from; check
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchOne() {
-        // TODO
+        
+        // Hiding records.
+        if (document.getElementById("recordForm").style.display == "block") {
+          document.getElementById("recordForm").style.display = "none";
+        }
+
         let textPrompt = "Enter record id";
         let singleID = window.prompt(textPrompt);
 
@@ -119,23 +132,30 @@
       // The main difference from updateRecord() will be the URL you send data to; check
       // the writeup to view the URL pattern for create and update
       function createRecord() {
-        // TODO
         document.getElementById("recordForm").style.display = "block";
+        if (document.getElementById("recordIDcontainer").style.display == "block") {
+          document.getElementById("recordIDcontainer").style.display = "none";
+        }
+        
+        document.getElementById("submitButton").onclick = function() {
+          let authorInput = document.getElementById("author").value;
+          let titleInput = document.getElementById("title").value;
+          let Url = document.getElementById("endpoint").value;
 
-        let authorInput = document.getElementById("author");
-        let titleInput = document.getElementById("title");
+          if(authorInput != "" && titleInput != "") {
 
-        let Url = document.getElementById("endpoint");
-
-        if(authorInput != "" && titleInput != "") {
-          fetch(Url, {
-            method: 'POST',
-            headers: {
-              "title" : titleInput,
-              "author" : authorInput
-            }
-          })
-          .then(res=>{document.getElementById("output").value = JSON.stringify(res)})
+            fetch(Url, {
+              method: 'POST',
+              headers: {'Content-Type' : 'application/json'},
+              
+              body: JSON.stringify({ 
+                title: titleInput,
+                author : authorInput
+              })
+            })
+            .then(data=>{return data.json()})
+            .then(res=>{document.getElementById("output").value = JSON.stringify(res)})
+          }
         }
       }
 
@@ -145,6 +165,30 @@
       // the writeup to view the URL pattern for create and update
       function updateRecord() {
         // TODO
+        document.getElementById("recordForm").style.display = "block";
+        document.getElementById("recordIDcontainer").style.display = "block";
+        
+        document.getElementById("submitButton").onclick = function() {
+          let authorInput = document.getElementById("author").value;
+          let titleInput = document.getElementById("title").value;
+          let idInput = document.getElementById("recordID").value;
+          let Url = document.getElementById("endpoint").value + "/" + idInput;
+
+          if(authorInput != "" && titleInput != "" && idInput != "") {
+            fetch(Url, {
+              method: 'PUT',
+              headers: {'Content-Type' : 'application/json'},
+            
+              body: JSON.stringify({
+                id : idInput,
+                title: titleInput,
+                author : authorInput
+              })
+            })
+            .then(data=>{return data.json()})
+            .then(res=>{document.getElementById("output").value = JSON.stringify(res)})
+          }
+        }
       }
 
       // This function should use fetch to delete one existing entry in the given endpoint.
@@ -153,16 +197,17 @@
       // request; check the writeup to view the URL pattern for get one and delete. THERE IS NO 
       // delete all, only delete one.
       function deleteRecord() {
-        // TODO
         let textPrompt = "Enter record id";
         let singleID = window.prompt(textPrompt);
 
-        const baseEndpoint = document.getElementById("endpoint");
+        const baseEndpoint = document.getElementById("endpoint").value;
         const Url = baseEndpoint + "/" + singleID;
+        console.log(Url);
 
-        return fetch(Url, {
-          method: 'delete'
+        fetch(Url, {
+          method: 'DELETE'
         })
+        .then(data=>{return data.json()})
         .then(res=>{document.getElementById("output").value = JSON.stringify(res)})
       }
 

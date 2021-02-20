@@ -6,13 +6,18 @@
       "author": "typicode"
     },
     {
-      "title": "id-3",
-      "author": "id-3",
+      "title": "second",
+      "author": "second",
+      "id": 2
+    },
+    {
+      "title": "third",
+      "author": "third",
       "id": 3
     },
     {
-      "title": "bonusCheck",
-      "author": "HereYaGooooo",
+      "title": "none",
+      "author": "third",
       "id": 4
     }
   ],
