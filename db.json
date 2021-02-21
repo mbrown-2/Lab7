@@ -6,19 +6,14 @@
       "author": "typicode"
     },
     {
-      "title": "second",
-      "author": "second",
-      "id": 2
+      "id": 2,
+      "title": "wererere",
+      "author": "www"
     },
     {
-      "title": "third",
-      "author": "third",
+      "title": "Another title!",
+      "author": "Bonus insertion",
       "id": 3
-    },
-    {
-      "title": "none",
-      "author": "third",
-      "id": 4
     }
   ],
   "comments": [
